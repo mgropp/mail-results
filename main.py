@@ -43,21 +43,22 @@ def send_email(
     message['Subject'] = subject
     message.set_content(text)
 
-    for attachment_file in attachments:
-        ctype, encoding = mimetypes.guess_type(str(attachment_file))
-        if ctype is None or encoding is not None:
-            ctype = 'application/octet-stream'
+    if attachments is not None:
+        for attachment_file in attachments:
+            ctype, encoding = mimetypes.guess_type(str(attachment_file))
+            if ctype is None or encoding is not None:
+                ctype = 'application/octet-stream'
 
-        print(f'\tAttaching {attachment_file.name} ({ctype})')
+            print(f'\tAttaching {attachment_file.name} ({ctype})')
 
-        maintype, subtype = ctype.split('/', 1)
-        with open(attachment_file, 'rb') as f:
-            message.add_attachment(
-                f.read(),
-                maintype=maintype,
-                subtype=subtype,
-                filename=attachment_file.name,
-            )
+            maintype, subtype = ctype.split('/', 1)
+            with open(attachment_file, 'rb') as f:
+                message.add_attachment(
+                    f.read(),
+                    maintype=maintype,
+                    subtype=subtype,
+                    filename=attachment_file.name,
+                )
 
     session = smtplib.SMTP(smtp_server, smtp_port)
     session.starttls()
