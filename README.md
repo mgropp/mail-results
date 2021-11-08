@@ -9,8 +9,8 @@ back to the students.
 Installation
 ------------
 
-Clone the repository and adjust the settings
-in `config.ini`.
+Clone the repository, copy `config.sample.ini` to
+`config.ini` and adjust the settings there.
 
 Here is an example configuration:
 ```ini
